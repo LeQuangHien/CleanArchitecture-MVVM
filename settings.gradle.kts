@@ -20,5 +20,12 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "CleanArchitecture"
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
- 
+include(":sync")
+include(":feature:news")
+include(":core:data")
+include(":core:model")
+include(":core:network")
+include(":core:database")
