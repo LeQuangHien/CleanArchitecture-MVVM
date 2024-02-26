@@ -54,6 +54,7 @@ dependencies {
     implementation(projects.sync)
     implementation(projects.feature.news)
     implementation(projects.core.network)
+    implementation(projects.core.data)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

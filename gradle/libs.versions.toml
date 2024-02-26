@@ -46,7 +46,7 @@ arrow = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
 arrow_retrofit = { module = "io.arrow-kt:arrow-core-retrofit", version.ref = "arrow_retrofit" }
 
 [bundles]
-koin = ["koin", "koin_compose", "koin_workmanager"]
+koin = ["koin", "koin_compose"]
 retrofit = ["retrofit", "retrofit_gson"]
 arrow = ["arrow", "arrow_retrofit"]
 

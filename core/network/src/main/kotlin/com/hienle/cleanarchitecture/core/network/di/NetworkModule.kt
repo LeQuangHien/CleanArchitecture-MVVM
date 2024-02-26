@@ -2,6 +2,8 @@ package com.hienle.cleanarchitecture.core.network.di
 
 import arrow.retrofit.adapter.either.EitherCallAdapterFactory
 import com.google.gson.GsonBuilder
+import com.hienle.cleanarchitecture.core.network.CaNetworkDatasource
+import com.hienle.cleanarchitecture.core.network.retrofit.RetrofitNetworkDatasource
 import com.hienle.cleanarchitecture.core.network.service.NewsService
 import com.hienle.cleanarchitecture.core.network.util.InstantDateDeserializer
 import com.hienle.cleanarchitecture.core.network.util.LocalTimeDeserializer
@@ -59,7 +61,7 @@ fun provideRetrofit(
         .build()
 }
 
-fun provideService(retrofit: Retrofit): NewsService =
+fun provideNewsService(retrofit: Retrofit): NewsService =
     retrofit.create(NewsService::class.java)
 
 val networkModule = module {
@@ -68,5 +70,6 @@ val networkModule = module {
     single { provideCommonInterceptor() }
     single { provideEitherCallAdapterFactory() }
     single { provideRetrofit(get(), get(), get(), get()) }
-    single { provideService(get()) }
+    single { provideNewsService(get()) }
+    single<CaNetworkDatasource> { RetrofitNetworkDatasource(get()) }
 }

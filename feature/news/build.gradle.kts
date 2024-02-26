@@ -37,6 +37,9 @@ dependencies {
     implementation(projects.core.data)
     implementation(projects.core.model)
 
+    implementation(libs.bundles.koin)
+    implementation(libs.bundles.arrow)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
