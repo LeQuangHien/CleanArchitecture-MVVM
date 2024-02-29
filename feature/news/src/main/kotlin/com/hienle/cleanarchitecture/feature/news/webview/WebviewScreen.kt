@@ -1,0 +1,31 @@
+package com.hienle.cleanarchitecture.feature.news.webview
+
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.viewinterop.AndroidView
+
+@Composable
+fun WebViewScreen(
+    url: String,
+    modifier: Modifier = Modifier,
+) {
+    AndroidView(
+        modifier = modifier.fillMaxSize(),
+        factory = { context ->
+            WebView(context).apply {
+                webViewClient = WebViewClient()
+                loadUrl(url)
+            }
+        },
+    )
+}
+
+@Preview
+@Composable
+fun WebviewScreenPreview() {
+    WebViewScreen(url = "google.com")
+}

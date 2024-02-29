@@ -1,4 +1,4 @@
-package com.hienle.cleanarchitecture.feature.news
+package com.hienle.cleanarchitecture.feature.news.article
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,13 +12,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-internal data class NewsViewState(
+data class NewsViewState(
     val showLoading: Boolean = true,
     val showError: Boolean = false,
     val newsItems: List<NewsItemUiState> = listOf(),
 )
 
-internal data class NewsItemUiState(
+data class NewsItemUiState(
     val source: Source?,
     val author: String?,
     val title: String?,
@@ -29,7 +29,7 @@ internal data class NewsItemUiState(
     val content: String?
 )
 
-internal class NewsViewModel(
+class NewsViewModel(
     private val newsRepository: NewsRepository
 ) : ViewModel() {
 
