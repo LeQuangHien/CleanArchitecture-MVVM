@@ -17,9 +17,16 @@ fun WebViewScreen(
         modifier = modifier.fillMaxSize(),
         factory = { context ->
             WebView(context).apply {
+                settings.javaScriptEnabled = true
                 webViewClient = WebViewClient()
-                loadUrl(url)
+
+                settings.loadWithOverviewMode = true
+                settings.useWideViewPort = true
+                settings.setSupportZoom(true)
             }
+        },
+        update = { webView ->
+            webView.loadUrl(url)
         },
     )
 }
