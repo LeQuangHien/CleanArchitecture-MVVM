@@ -26,13 +26,12 @@ data class NewsItemUiState(
     val url: String?,
     val urlToImage: String?,
     val publishedAt: String?,
-    val content: String?
+    val content: String?,
 )
 
 class NewsViewModel(
-    private val newsRepository: NewsRepository
+    private val newsRepository: NewsRepository,
 ) : ViewModel() {
-
     init {
         getTopHeadlines()
     }
@@ -44,24 +43,25 @@ class NewsViewModel(
 
     private fun getTopHeadlines() {
         fetchJob?.cancel()
-        fetchJob = viewModelScope.launch {
-            newsRepository.getTopHeadlines(country = "de").fold(
-                ifLeft = {
-                    _uiState.update {
-                        it.copy(showError = true, showLoading = false)
-                    }
-                },
-                ifRight = { articleResponse ->
-                    _uiState.update {
-                        val items: List<NewsItemUiState> =
-                            articleResponse.articles.map { article ->
-                                mapNewsItemUiState(article)
-                            }
-                        it.copy(newsItems = items, showLoading = false)
-                    }
-                }
-            )
-        }
+        fetchJob =
+            viewModelScope.launch {
+                newsRepository.getTopHeadlines(country = "us").fold(
+                    ifLeft = {
+                        _uiState.update {
+                            it.copy(showError = true, showLoading = false)
+                        }
+                    },
+                    ifRight = { articleResponse ->
+                        _uiState.update {
+                            val items: List<NewsItemUiState> =
+                                articleResponse.articles.map { article ->
+                                    mapNewsItemUiState(article)
+                                }
+                            it.copy(newsItems = items, showLoading = false)
+                        }
+                    },
+                )
+            }
     }
 
     private fun mapNewsItemUiState(article: Article): NewsItemUiState {
@@ -73,7 +73,7 @@ class NewsViewModel(
             url = article.url,
             urlToImage = article.urlToImage,
             publishedAt = article.publishedAt,
-            content = article.content
+            content = article.content,
         )
     }
 }

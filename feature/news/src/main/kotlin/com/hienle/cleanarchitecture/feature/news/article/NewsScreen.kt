@@ -1,6 +1,5 @@
 package com.hienle.cleanarchitecture.feature.news.article
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,23 +18,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.hienle.cleanarchitecture.core.common.CaImage
 import com.hienle.cleanarchitecture.core.model.Source
-import com.hienle.cleanarchitecture.feature.news.R
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun NewsScreen(
     modifier: Modifier = Modifier,
     onArticleClicked: (String) -> Unit,
-    viewModel: NewsViewModel = koinViewModel()
+    viewModel: NewsViewModel = koinViewModel(),
 ) {
     val viewState by viewModel.uiState.collectAsStateWithLifecycle()
-    NewsScreenScaffold(modifier = modifier, onArticleClicked = onArticleClicked, viewState = viewState)
+    NewsScreenScaffold(
+        modifier = modifier,
+        onArticleClicked = onArticleClicked,
+        viewState = viewState,
+    )
 }
 
 @Composable
@@ -75,33 +76,33 @@ fun NewsArticleItem(
             ) {
                 Text(
                     text = newsItemUiState.source?.name ?: "",
-                    style = MaterialTheme.typography.headlineMedium,
+                    style = MaterialTheme.typography.labelSmall,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = newsItemUiState.title ?: "",
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.titleMedium,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = newsItemUiState.description ?: "",
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = newsItemUiState.publishedAt ?: "",
-                    style = MaterialTheme.typography.headlineSmall,
+                    style = MaterialTheme.typography.labelSmall,
                 )
             }
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = null,
-                modifier =
-                    Modifier
-                        .size(100.dp)
-                        .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Crop,
-            )
+            newsItemUiState.urlToImage?.let {
+                CaImage(
+                    modifier =
+                        Modifier
+                            .size(100.dp)
+                            .clip(RoundedCornerShape(8.dp)),
+                    url = it,
+                )
+            }
         }
     }
 }

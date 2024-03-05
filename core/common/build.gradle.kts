@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.hienle.cleanarchitecture.feature.news"
+    namespace = "com.hienle.cleanarchitecture.core.common"
     compileSdk = 34
 
     defaultConfig {
@@ -19,7 +19,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -40,22 +40,21 @@ android {
 
 dependencies {
 
-    implementation(projects.core.data)
-    implementation(projects.core.model)
-    implementation(projects.core.common)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
 
-    implementation(libs.bundles.koin)
-    implementation(libs.bundles.arrow)
-    implementation(libs.bundles.compose)
-
-    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.webkit)
-    implementation(libs.material)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+
+    implementation(libs.coil)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

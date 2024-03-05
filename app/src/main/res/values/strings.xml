@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CleanArchitecture</string>
+    <string name="app_name">News</string>
     <string name="details_screen">Details</string>
     <string name="back_button">Back button</string>
     <string name="favorites_screen">Favorites</string>
