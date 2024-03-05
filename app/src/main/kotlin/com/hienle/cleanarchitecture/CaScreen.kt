@@ -78,15 +78,15 @@ fun CaApp(navController: NavHostController = rememberNavController()) {
     // Get current back stack entry
     val backStackEntry by navController.currentBackStackEntryAsState()
     // Get the name of the current screen
-   /* val currentScreen =
+    val currentScreen =
         CaScreen.valueOf(
-            backStackEntry?.destination?.route ?: CaScreen.Start.name,
-        )*/
+            backStackEntry?.destination?.route?.split("/")?.first() ?: CaScreen.Start.name,
+        )
 
     Scaffold(
         topBar = {
             CaAppBar(
-                currentScreen = CaScreen.Start,
+                currentScreen = currentScreen,
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() },
             )
