@@ -21,7 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.hienle.cleanarchitecture.core.common.CaImage
+import com.hienle.cleanarchitecture.core.common.utils.CaImage
 import com.hienle.cleanarchitecture.core.model.Source
 import org.koin.androidx.compose.koinViewModel
 
@@ -31,7 +31,7 @@ fun NewsScreen(
     onArticleClicked: (String) -> Unit,
     viewModel: NewsViewModel = koinViewModel(),
 ) {
-    val viewState by viewModel.uiState.collectAsStateWithLifecycle()
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     NewsScreenScaffold(
         modifier = modifier,
         onArticleClicked = onArticleClicked,

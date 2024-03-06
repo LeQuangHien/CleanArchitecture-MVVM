@@ -1,4 +1,4 @@
-package com.hienle.cleanarchitecture.core.common
+package com.hienle.cleanarchitecture.core.common.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

@@ -1,16 +1,12 @@
 package com.hienle.cleanarchitecture.feature.news.article
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.hienle.cleanarchitecture.core.common.architecture.ViewStateModel
 import com.hienle.cleanarchitecture.core.data.repository.NewsRepository
 import com.hienle.cleanarchitecture.core.model.Article
+import com.hienle.cleanarchitecture.core.model.ArticleResponse
 import com.hienle.cleanarchitecture.core.model.Source
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlin.coroutines.CoroutineContext
 
 data class NewsViewState(
     val showLoading: Boolean = true,
@@ -31,37 +27,24 @@ data class NewsItemUiState(
 
 class NewsViewModel(
     private val newsRepository: NewsRepository,
-) : ViewModel() {
+    initialState: NewsViewState = NewsViewState(),
+    coroutineContext: CoroutineContext = Dispatchers.IO,
+) : ViewStateModel<NewsViewState>(initialState, coroutineContext) {
     init {
-        getTopHeadlines()
+        launch {
+            getTopHeadlines()
+        }
     }
 
-    private var fetchJob: Job? = null
-
-    private val _uiState = MutableStateFlow(NewsViewState(showLoading = true))
-    val uiState: StateFlow<NewsViewState> = _uiState.asStateFlow()
-
-    private fun getTopHeadlines() {
-        fetchJob?.cancel()
-        fetchJob =
-            viewModelScope.launch {
-                newsRepository.getTopHeadlines(country = "us").fold(
-                    ifLeft = {
-                        _uiState.update {
-                            it.copy(showError = true, showLoading = false)
-                        }
-                    },
-                    ifRight = { articleResponse ->
-                        _uiState.update {
-                            val items: List<NewsItemUiState> =
-                                articleResponse.articles.map { article ->
-                                    mapNewsItemUiState(article)
-                                }
-                            it.copy(newsItems = items, showLoading = false)
-                        }
-                    },
-                )
-            }
+    private suspend fun getTopHeadlines() {
+        newsRepository.getTopHeadlines(country = "us").fold(
+            ifLeft = {
+                sendErrorState()
+            },
+            ifRight = {
+                handleArticlesResult(it)
+            },
+        )
     }
 
     private fun mapNewsItemUiState(article: Article): NewsItemUiState {
@@ -75,5 +58,28 @@ class NewsViewModel(
             publishedAt = article.publishedAt,
             content = article.content,
         )
+    }
+
+    private fun handleArticlesResult(articleResponse: ArticleResponse) {
+        val items: List<NewsItemUiState> =
+            articleResponse.articles.map { article ->
+                mapNewsItemUiState(article)
+            }
+        update {
+            it.copy(
+                newsItems = items,
+                showLoading = false,
+                showError = false,
+            )
+        }
+    }
+
+    private fun sendErrorState() {
+        update {
+            it.copy(
+                showError = true,
+                showLoading = false,
+            )
+        }
     }
 }
