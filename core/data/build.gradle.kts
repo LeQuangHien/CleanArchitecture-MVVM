@@ -19,16 +19,22 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = "17"
+    }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
     }
 }
 
@@ -45,6 +51,8 @@ dependencies {
     implementation(libs.koin)
     implementation(libs.bundles.arrow)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
+    testImplementation(libs.jupiter)
+    testImplementation(libs.mockito)
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutines.test)
 }

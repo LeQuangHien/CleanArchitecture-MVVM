@@ -14,7 +14,7 @@ class InstantDateDeserializer : JsonDeserializer<Instant> {
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
-        context: JsonDeserializationContext?
+        context: JsonDeserializationContext?,
     ): Instant? {
         return json?.asString?.let {
             Instant.parse(it)
@@ -26,7 +26,7 @@ class LocalTimeDeserializer : JsonDeserializer<LocalTime> {
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
-        context: JsonDeserializationContext?
+        context: JsonDeserializationContext?,
     ): LocalTime? {
         return json?.asString?.let {
             LocalTime.parse(it)
@@ -38,7 +38,7 @@ class LocalTimeSerializer : JsonSerializer<LocalTime> {
     override fun serialize(
         src: LocalTime,
         typeOfSrc: Type,
-        context: JsonSerializationContext
+        context: JsonSerializationContext,
     ): JsonElement {
         return context.serialize(src.format(DateTimeFormatter.ISO_LOCAL_TIME))
     }

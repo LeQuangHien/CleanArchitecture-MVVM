@@ -25,19 +25,21 @@ fun provideHttpClient(): OkHttpClient.Builder {
 }
 
 fun provideGsonConverterFactory(): GsonConverterFactory {
-    val gson = GsonBuilder()
-        .registerTypeAdapter(Instant::class.java, InstantDateDeserializer())
-        .registerTypeAdapter(LocalTime::class.java, LocalTimeDeserializer())
-        .registerTypeAdapter(LocalTime::class.java, LocalTimeSerializer())
-        .create()
+    val gson =
+        GsonBuilder()
+            .registerTypeAdapter(Instant::class.java, InstantDateDeserializer())
+            .registerTypeAdapter(LocalTime::class.java, LocalTimeDeserializer())
+            .registerTypeAdapter(LocalTime::class.java, LocalTimeSerializer())
+            .create()
     return GsonConverterFactory.create(gson)
 }
 
 fun provideCommonInterceptor(): Interceptor {
     return Interceptor { chain ->
-        val reqBuilder = chain.request().newBuilder()
-            .addHeader("Content-Type", "application/json")
-            .addHeader("Authorization", "7fbe9415fb614d65b75621da46646c6e")
+        val reqBuilder =
+            chain.request().newBuilder()
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", "7fbe9415fb614d65b75621da46646c6e")
         chain.proceed(reqBuilder.build())
     }
 }
@@ -50,7 +52,7 @@ fun provideRetrofit(
     httpClientBuilder: OkHttpClient.Builder,
     gsonConverterFactory: GsonConverterFactory,
     commonInterceptor: Interceptor,
-    eitherCallAdapterFactory: EitherCallAdapterFactory
+    eitherCallAdapterFactory: EitherCallAdapterFactory,
 ): Retrofit {
     httpClientBuilder.addInterceptor(commonInterceptor)
     return Retrofit.Builder()
@@ -61,15 +63,15 @@ fun provideRetrofit(
         .build()
 }
 
-fun provideNewsService(retrofit: Retrofit): NewsService =
-    retrofit.create(NewsService::class.java)
+fun provideNewsService(retrofit: Retrofit): NewsService = retrofit.create(NewsService::class.java)
 
-val networkModule = module {
-    single { provideHttpClient() }
-    single { provideGsonConverterFactory() }
-    single { provideCommonInterceptor() }
-    single { provideEitherCallAdapterFactory() }
-    single { provideRetrofit(get(), get(), get(), get()) }
-    single { provideNewsService(get()) }
-    single<CaNetworkDatasource> { RetrofitNetworkDatasource(get()) }
-}
+val networkModule =
+    module {
+        single { provideHttpClient() }
+        single { provideGsonConverterFactory() }
+        single { provideCommonInterceptor() }
+        single { provideEitherCallAdapterFactory() }
+        single { provideRetrofit(get(), get(), get(), get()) }
+        single { provideNewsService(get()) }
+        single<CaNetworkDatasource> { RetrofitNetworkDatasource(get()) }
+    }

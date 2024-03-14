@@ -1,12 +1,11 @@
 [versions]
-agp = "8.3.0-rc02"
+agp = "8.3.0"
 kotlin = "1.9.0"
 coreKtx = "1.12.0"
 junit = "4.13.2"
-junitVersion = "1.1.5"
 lifecycleRuntimeKtx = "2.7.0"
 activityCompose = "1.8.2"
-composeBom = "2024.02.01"
+composeBom = "2024.02.02"
 koin = "3.5.3"
 appcompat = "1.6.1"
 webkit = "1.10.0"
@@ -20,10 +19,18 @@ navigationRuntimeKtx = "2.7.7"
 navigationCompose = "2.7.7"
 coil = "2.6.0"
 
+# test dependencies
+coroutines = "1.7.3"
+jupiter = "5.9.3"
+androidx_junit = "1.1.5"
+mockito = "4.1.0"
+turbine = "1.0.0"
+mockk = "1.13.5"
+uiautomator = "2.3.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
@@ -32,8 +39,6 @@ androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "webkit" }
@@ -53,6 +58,17 @@ arrow = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow" }
 arrow_retrofit = { group = "io.arrow-kt", name = "arrow-core-retrofit", version.ref = "arrow_retrofit" }
 
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil"}
+
+# test dependencies
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx_junit" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-uiautomator = {group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator"}
+jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "jupiter" }
+mockito = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+coroutines_test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 
 [bundles]
 compose = ["androidx-ui", "androidx-ui-graphics", "androidx-ui-tooling", "androidx-ui-tooling-preview", "androidx-ui-test-manifest", "androidx-ui-test-junit4", "androidx-material3"]

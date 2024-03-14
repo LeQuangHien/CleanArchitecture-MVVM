@@ -16,14 +16,20 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hienle.cleanarchitecture.core.common.utils.CaImage
 import com.hienle.cleanarchitecture.core.model.Source
 import org.koin.androidx.compose.koinViewModel
+
 
 @Composable
 fun NewsScreen(
@@ -39,14 +45,21 @@ fun NewsScreen(
     )
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun NewsScreenScaffold(
     modifier: Modifier = Modifier,
     onArticleClicked: (String) -> Unit,
     viewState: NewsViewState,
 ) {
-    Surface(color = MaterialTheme.colorScheme.background, modifier = modifier) {
-        LazyColumn {
+    Surface(
+        color = MaterialTheme.colorScheme.background,
+        modifier =
+            modifier.semantics {
+                testTagsAsResourceId = true
+            },
+    ) {
+        LazyColumn(modifier = Modifier.testTag("newsArticleLazyColumn")) {
             items(items = viewState.newsItems) {
                 NewsArticleItem(newsItemUiState = it, onArticleClicked = onArticleClicked)
             }
@@ -64,7 +77,8 @@ fun NewsArticleItem(
             Modifier
                 .padding(16.dp)
                 .fillMaxWidth()
-                .clickable { newsItemUiState.url?.let { onArticleClicked(it) } },
+                .clickable { newsItemUiState.url?.let { onArticleClicked(it) } }
+                .semantics { contentDescription = "News article item" },
         tonalElevation = 4.dp,
         shape = RoundedCornerShape(8.dp),
     ) {
