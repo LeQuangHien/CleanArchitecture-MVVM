@@ -5,7 +5,7 @@
 ![GitHub stars](https://img.shields.io/github/stars/LeQuangHien/CleanArchitecture-MVVM?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/LeQuangHien/CleanArchitecture-MVVM?style=social)
 
-This project follows the principles outlined in the [Guide to app architecture](https://developer.android.com/jetpack/guide) using data from the [NewsApi](https://newsapi.org/). It's designed with MVVM in the presentation layer and Clean Architecture throughout the application. Key technologies include [Koin](https://insert-koin.io/) for Dependency Injection, [Jetpack Compose](https://developer.android.com/develop/ui/compose) for UI, [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) and [Flow](https://developer.android.com/kotlin/flow) for asynchronous programming, [Retrofit](https://square.github.io/retrofit/) for REST API integration, [Arrow](https://arrow-kt.io/) for functional programming, [Coil](https://coil-kt.github.io/coil/) for image loading, Lifecycle-Aware components for better management, [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel), as well as JUnit and [Compose UI Test](https://developer.android.com/develop/ui/compose/testing) for unit and UI testing. The project also applies modularization for scalability and maintainability. Please note that the app is currently under development and subject to change.
+This project follows the principles outlined in the [Guide to app architecture](https://developer.android.com/jetpack/guide) using data from the [NewsApi](https://newsapi.org/). It's designed with MVVM in the presentation layer and Clean Architecture throughout the application. Key technologies include [Koin](https://insert-koin.io/) for Dependency Injection, [Jetpack Compose](https://developer.android.com/develop/ui/compose) for UI, [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines) and [Flow](https://developer.android.com/kotlin/flow) for asynchronous programming, [Retrofit](https://square.github.io/retrofit/) for REST API integration, [Arrow](https://arrow-kt.io/) for functional programming, [Coil](https://coil-kt.github.io/coil/) for image loading, Lifecycle-Aware components for better management, [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel), as well as JUnit and [Compose UI Test](https://developer.android.com/develop/ui/compose/testing) for unit and UI testing. The project also applies modularization for scalability and maintainability. Please note that the app is currently under development and subject to change.
 
 ## Features
 
@@ -48,7 +48,7 @@ This project is licensed under the Apache-2.0 License - see the [LICENSE](LICENS
 - [NewsApi](https://newsapi.org/)
 - [Koin](https://insert-koin.io/)
 - [Jetpack Compose](https://developer.android.com/develop/ui/compose)
-- [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html)
+- [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines)
 - [Flow](https://developer.android.com/kotlin/flow)
 - [Retrofit](https://square.github.io/retrofit/)
 - [Arrow](https://arrow-kt.io/)
