@@ -6,40 +6,28 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavHostController
-import androidx.navigation.NavType
+import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.hienle.cleanarchitecture.feature.news.article.NewsScreen
 import com.hienle.cleanarchitecture.feature.news.webview.WebViewScreen
 import java.net.URLEncoder
 
-/**
- * enum values that represent the screens in the app
- */
-enum class CaScreen(
-    @StringRes val title: Int,
-) {
-    Start(title = R.string.app_name),
-    Details(title = R.string.details_screen),
-    Favorites(title = R.string.favorites_screen),
+// Define sealed classes for type-safe navigation destinations
+sealed class CaScreen(@StringRes val title: Int, val route: String) {
+    object Start : CaScreen(R.string.app_name, "start")
+    object Details : CaScreen(R.string.details_screen, "details/{url}") {
+        fun createRoute(url: String) = "details/$url"
+    }
+    object Favorites : CaScreen(R.string.favorites_screen, "favorites")
 }
 
 /**
@@ -56,9 +44,9 @@ fun CaAppBar(
     TopAppBar(
         title = { Text(stringResource(currentScreen.title)) },
         colors =
-            TopAppBarDefaults.mediumTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-            ),
+        TopAppBarDefaults.mediumTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+        ),
         modifier = modifier,
         navigationIcon = {
             if (canNavigateBack) {
@@ -77,11 +65,14 @@ fun CaAppBar(
 fun CaApp(navController: NavHostController = rememberNavController()) {
     // Get current back stack entry
     val backStackEntry by navController.currentBackStackEntryAsState()
-    // Get the name of the current screen
+    // Get the current screen from the back stack entry's route
     val currentScreen =
-        CaScreen.valueOf(
-            backStackEntry?.destination?.route?.split("/")?.first() ?: CaScreen.Start.name,
-        )
+        when (backStackEntry?.destination?.route?.substringBefore("/")) {
+            CaScreen.Start.route -> CaScreen.Start
+            CaScreen.Details.route.substringBefore("/{url}") -> CaScreen.Details
+            CaScreen.Favorites.route -> CaScreen.Favorites
+            else -> CaScreen.Start
+        }
 
     Scaffold(
         topBar = {
@@ -95,35 +86,35 @@ fun CaApp(navController: NavHostController = rememberNavController()) {
 
         NavHost(
             navController = navController,
-            startDestination = CaScreen.Start.name,
+            startDestination = CaScreen.Start.route,
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
+            Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
         ) {
-            composable(route = CaScreen.Start.name) {
+            composable(route = CaScreen.Start.route) {
                 NewsScreen(
                     onArticleClicked = { url ->
                         val encodedUrl = URLEncoder.encode(url, Charsets.UTF_8.name())
-                        navController.navigate("${CaScreen.Details.name}/$encodedUrl")
+                        navController.navigate(CaScreen.Details.createRoute(encodedUrl))
                     },
                     modifier =
-                        Modifier
-                            .fillMaxSize()
-                            .padding(dimensionResource(R.dimen.padding_medium)),
+                    Modifier
+                        .fillMaxSize()
+                        .padding(dimensionResource(R.dimen.padding_medium)),
                 )
             }
             composable(
-                route = "${CaScreen.Details.name}/{url}",
+                route = CaScreen.Details.route,
                 arguments = listOf(navArgument("url") { type = NavType.StringType }),
-            ) {
-                val url = backStackEntry?.arguments?.getString("url") ?: ""
+            ) { navBackStackEntry ->
+                val url = navBackStackEntry.arguments?.getString("url") ?: ""
                 WebViewScreen(
                     url = url,
                     modifier = Modifier.fillMaxHeight(),
                 )
             }
-            composable(route = CaScreen.Favorites.name) {
+            composable(route = CaScreen.Favorites.route) {
                 FavoritesScreen()
             }
         }
