@@ -1,5 +1,8 @@
 [versions]
-agp = "8.7.2"
+# AGP and tools should be updated together
+androidGradlePlugin = "8.7.2"
+androidTools = "31.7.2"
+
 kotlin = "1.9.0"
 coreKtx = "1.12.0"
 junit = "4.13.2"
@@ -45,19 +48,20 @@ androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "w
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-
 koin = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin_compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 koin_workmanager = { group = "io.insert-koin", name = "koin-androidx-workmanager", version.ref = "koin" }
-
 okhttp_logging_interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp_logging_interceptor" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit_gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
-
 arrow = { group = "io.arrow-kt", name = "arrow-core", version.ref = "arrow" }
 arrow_retrofit = { group = "io.arrow-kt", name = "arrow-core-retrofit", version.ref = "arrow_retrofit" }
-
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil"}
+
+# Dependencies of the included build-logic
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 
 # test dependencies
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx_junit" }
@@ -77,7 +81,10 @@ retrofit = ["retrofit", "retrofit_gson"]
 arrow = ["arrow", "arrow_retrofit"]
 
 [plugins]
-androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-androidLibrary = { id = "com.android.library", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 
+# Plugins defined by this project
+cleanarchitecture-android-application = { id = "cleanarchitecture.android.application" }
+cleanarchitecture-android-library = { id = "cleanarchitecture.android.library"}
