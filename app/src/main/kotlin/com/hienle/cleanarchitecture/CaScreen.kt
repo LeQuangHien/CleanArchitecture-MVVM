@@ -21,7 +21,7 @@ import com.hienle.cleanarchitecture.feature.news.article.NewsScreen
 import com.hienle.cleanarchitecture.feature.news.webview.WebViewScreen
 import java.net.URLEncoder
 
-// Define sealed classes for type-safe navigation destinations
+// Define sealed classes for navigation destinations
 sealed class CaScreen(@StringRes val title: Int, val route: String) {
     object Start : CaScreen(R.string.app_name, "start")
     object Details : CaScreen(R.string.details_screen, "details/{url}") {
