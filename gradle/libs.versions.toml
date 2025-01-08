@@ -3,7 +3,7 @@
 androidGradlePlugin = "8.7.3"
 androidTools = "31.7.3"
 
-kotlin = "1.9.0"
+kotlin = "2.1.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 lifecycleRuntimeKtx = "2.8.7"
@@ -81,9 +81,11 @@ retrofit = ["retrofit", "retrofit_gson"]
 arrow = ["arrow", "arrow_retrofit"]
 
 [plugins]
-androidApplication = { id = "com.android.application", version.ref = "androidGradlePlugin" }
-jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-androidLibrary = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 # Plugins defined by this project
 cleanarchitecture-android-application = { id = "cleanarchitecture.android.application" }
