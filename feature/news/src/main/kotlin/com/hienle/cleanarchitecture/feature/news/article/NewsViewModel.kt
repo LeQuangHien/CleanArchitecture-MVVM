@@ -30,7 +30,8 @@ class NewsViewModel(
     initialState: NewsViewState = NewsViewState(),
     coroutineContext: CoroutineContext = Dispatchers.IO,
 ) : ViewStateModel<NewsViewState>(initialState, coroutineContext) {
-    init {
+
+    fun fetchTopHeadlines() {
         launch {
             getTopHeadlines()
         }

@@ -84,7 +84,7 @@ class NewsViewModelTest {
                     newsRepository = newsRepository,
                     coroutineContext = coroutineContext,
                 )
-
+            viewModel.fetchTopHeadlines()
             advanceUntilIdle()
 
             val state = viewModel.viewState.value
@@ -102,7 +102,7 @@ class NewsViewModelTest {
                     newsRepository = newsRepository,
                     coroutineContext = coroutineContext,
                 )
-
+            viewModel.fetchTopHeadlines()
             advanceUntilIdle()
 
             val state = viewModel.viewState.value

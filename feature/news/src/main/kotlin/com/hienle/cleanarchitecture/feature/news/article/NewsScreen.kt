@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -38,6 +39,11 @@ fun NewsScreen(
     viewModel: NewsViewModel = koinViewModel(),
 ) {
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchTopHeadlines()
+    }
+
     NewsScreenScaffold(
         modifier = modifier,
         onArticleClicked = onArticleClicked,
