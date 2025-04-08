@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">News</string>
+    <string name="start_screen">Start</string>
     <string name="details_screen">Details</string>
-    <string name="back_button">Back button</string>
     <string name="favorites_screen">Favorites</string>
+    <string name="back_button">Back button</string>
 </resources>

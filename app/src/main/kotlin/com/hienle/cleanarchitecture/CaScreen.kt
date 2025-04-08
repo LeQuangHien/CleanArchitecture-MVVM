@@ -77,12 +77,12 @@ fun CaApp(navController: NavHostController = rememberNavController()) {
     // Get the current screen from the back stack entry's route
     val currentScreen = backStackEntry?.destination?.let { currentDestination ->
         when {
-            currentDestination.hasRoute(Start::class) -> "Start"
-            currentDestination.hasRoute(Details::class) -> "Details"
-            currentDestination.hasRoute(Favorites::class) -> "Favorites"
-            else -> "Start"
+            currentDestination.hasRoute(Start::class) -> stringResource(R.string.start_screen)
+            currentDestination.hasRoute(Details::class) -> stringResource(R.string.details_screen)
+            currentDestination.hasRoute(Favorites::class) -> stringResource(R.string.favorites_screen)
+            else -> stringResource(R.string.start_screen)
         }
-    } ?: "Start"
+    } ?: stringResource(R.string.start_screen)
 
     Scaffold(
         topBar = {
